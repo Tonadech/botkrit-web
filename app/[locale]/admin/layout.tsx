@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+
+// บังคับให้ admin section render แบบ dynamic เสมอ (ใช้ cookies/auth)
+export const dynamic = 'force-dynamic';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { LogoutButton } from '@/components/logout-button';

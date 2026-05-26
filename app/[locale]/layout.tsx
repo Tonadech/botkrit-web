@@ -14,6 +14,10 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// public pages ใช้ navbar ที่อ่าน cookies (เช็ค user) → ต้อง render เป็น dynamic
+// ถ้าอยากให้บางหน้า static ค่อย override ใน page นั้นเฉพาะ
+export const dynamic = 'force-dynamic';
+
 export default async function LocaleLayout({
   children,
   params: { locale },
