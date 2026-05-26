@@ -20,7 +20,7 @@ export default async function EAListPage({ params: { locale } }: { params: { loc
 
   return (
     <PageShell locale={locale}>
-      <section className="container-page py-12">
+      <section>
         {/* knowledge card */}
         <Card className="mb-10 border-primary/30 bg-primary/5">
           <CardHeader className="flex flex-row items-start gap-3 space-y-0">

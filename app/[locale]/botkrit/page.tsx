@@ -16,7 +16,7 @@ export default async function BotkritPage({
 
   return (
     <PageShell locale={locale}>
-      <section className="container-page py-16">
+      <section>
         <h1 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">{t('pageTitle')}</h1>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">

@@ -23,7 +23,7 @@ export default async function CoursesListPage({
 
   return (
     <PageShell locale={locale}>
-      <section className="container-page py-12">
+      <section>
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{t('pageTitle')}</h1>
         <p className="mt-2 text-muted-foreground">{t('pageSubtitle')}</p>
 

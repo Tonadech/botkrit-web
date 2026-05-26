@@ -30,7 +30,7 @@ export default async function BlogDetailPage({
 
   return (
     <PageShell locale={locale}>
-      <article className="container-page py-12 max-w-3xl">
+      <article className="max-w-3xl">
         <Link href={`/${locale}/blog`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">
           <ChevronLeft className="size-4" /> {tCommon('back')}
         </Link>

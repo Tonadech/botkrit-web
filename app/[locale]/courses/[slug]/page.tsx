@@ -37,7 +37,7 @@ export default async function CourseDetailPage({
 
   return (
     <PageShell locale={locale}>
-      <article className="container-page py-12">
+      <article>
         <Link href={`/${locale}/courses`} className="inline-flex items-center gap-1 text-sm text-primary hover:underline">
           <ChevronLeft className="size-4" /> {tCommon('back')}
         </Link>

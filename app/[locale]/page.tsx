@@ -7,21 +7,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import type { Locale } from '@/types/database';
 
-// หน้าแรก — hero + 3 บริการหลัก + CTA
+// หน้าแรก — hero (bleed) + 3 service cards (contained)
 export default async function HomePage({ params: { locale } }: { params: { locale: Locale } }) {
   const t = await getTranslations('home');
 
   return (
-    <PageShell locale={locale}>
-      {/* Hero section */}
+    <PageShell locale={locale} bleedContent>
+      {/* Hero section (full-bleed) */}
       <section className="relative overflow-hidden bg-hero-gradient text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,hsl(var(--primary)/0.18),transparent_60%)]" />
-        <div className="container-page relative py-24 sm:py-32">
-          <div className="mx-auto max-w-3xl text-center">
+        <div className="relative mx-auto max-w-4xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+          <div className="text-center">
             <Badge variant="outline" className="border-accent/30 bg-accent/10 text-accent">
               <Sparkles className="size-3" /> BOTKRIT 2026
             </Badge>
-            <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+            <h1 className="mt-6 text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               {t('heroTitle')}
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-pretty text-base text-white/75 sm:text-lg">
@@ -39,13 +39,13 @@ export default async function HomePage({ params: { locale } }: { params: { local
         </div>
       </section>
 
-      {/* 3 บริการหลัก */}
-      <section className="container-page py-20">
+      {/* 3 บริการหลัก (contained ภายใน main) */}
+      <section className="mx-auto w-full max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center">
           <Badge variant="secondary">Services</Badge>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{t('servicesTitle')}</h2>
+          <h2 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">{t('servicesTitle')}</h2>
         </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
           <ServiceCard
             href={`/${locale}/ea`}
             title={t('service1Title')}
