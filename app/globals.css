@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ตัวแปรสีสำหรับ light/dark mode */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --border: 217 33% 20%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply antialiased;
+  }
+}
+
+/* utility classes */
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-emerald px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-emerald-light transition-colors disabled:opacity-50;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-brand-navy/20 bg-white px-5 py-2.5 text-sm font-semibold text-brand-navy hover:bg-brand-navy/5 transition-colors dark:border-white/20 dark:bg-transparent dark:text-white dark:hover:bg-white/5;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-gold px-5 py-2.5 text-sm font-semibold text-brand-navy-dark shadow-sm hover:bg-brand-gold-light transition-colors;
+  }
+  .card {
+    @apply rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-sm;
+  }
+  .input {
+    @apply w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2 text-sm focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-brand-emerald/20;
+  }
+  .label {
+    @apply block text-sm font-medium text-[hsl(var(--foreground))] mb-1.5;
+  }
+}
