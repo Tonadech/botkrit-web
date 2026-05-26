@@ -2,8 +2,13 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { locales, type AppLocale } from '@/lib/i18n';
+import { cn } from '@/lib/utils';
+
+// font หลัก — Inter รองรับทั้งไทยและอังกฤษได้พอใช้ (ใช้ ['latin'] เพราะ next/font ไม่มี subset ไทย)
+const fontSans = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'BOTKRIT — Forex EA & Course',
@@ -32,8 +37,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col">
+    <html lang={locale} suppressHydrationWarning className={fontSans.variable}>
+      <body className={cn('min-h-screen flex flex-col font-sans')}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextIntlClientProvider messages={messages} locale={locale}>
             {children}

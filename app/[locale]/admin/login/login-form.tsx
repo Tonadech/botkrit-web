@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { AlertCircle, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
 import type { Locale } from '@/types/database';
 
-// ฟอร์ม login — เรียก Supabase Auth ตรง ๆ ฝั่ง browser
-// หลัง login สำเร็จ ตรวจ role จาก profiles อีกชั้น
 export function LoginForm({ locale }: { locale: Locale }) {
   const t = useTranslations('admin');
   const router = useRouter();
@@ -32,14 +34,11 @@ export function LoginForm({ locale }: { locale: Locale }) {
       return;
     }
 
-    // เช็ค role จากตาราง profiles
+    // เช็ค role จาก profiles อีกชั้น
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .maybeSingle();
+        .from('profiles').select('role').eq('id', user.id).maybeSingle();
 
       if (profile?.role !== 'admin') {
         await supabase.auth.signOut();
@@ -55,18 +54,23 @@ export function LoginForm({ locale }: { locale: Locale }) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div>
-        <label className="label" htmlFor="email">{t('email')}</label>
-        <input id="email" name="email" type="email" required className="input" />
+      <div className="space-y-1.5">
+        <Label htmlFor="email">{t('email')}</Label>
+        <Input id="email" name="email" type="email" required autoFocus />
       </div>
-      <div>
-        <label className="label" htmlFor="password">{t('password')}</label>
-        <input id="password" name="password" type="password" required className="input" />
+      <div className="space-y-1.5">
+        <Label htmlFor="password">{t('password')}</Label>
+        <Input id="password" name="password" type="password" required />
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <button type="submit" disabled={loading} className="btn-primary w-full">
+      {error && (
+        <p className="flex items-center gap-2 text-sm text-destructive">
+          <AlertCircle className="size-4" /> {error}
+        </p>
+      )}
+      <Button type="submit" disabled={loading} className="w-full">
+        {loading && <Loader2 className="size-4 animate-spin" />}
         {loading ? t('loggingIn') : t('login')}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -1,10 +1,12 @@
 import { getTranslations } from 'next-intl/server';
+import { MessageCircle, Send, Mail } from 'lucide-react';
+import { FacebookIcon } from '@/components/brand-icons';
 import { PageShell } from '@/components/page-shell';
 import { InquiryForm } from '@/components/inquiry-form';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/lib/config';
 import type { InquiryType, Locale } from '@/types/database';
 
-// หน้าติดต่อ — รับ query string ?type=ea&id=... จาก purchase modal
 export default async function ContactPage({
   params: { locale },
   searchParams,
@@ -21,50 +23,54 @@ export default async function ContactPage({
   return (
     <PageShell locale={locale}>
       <section className="container-page py-12">
-        <h1 className="text-3xl sm:text-4xl font-bold">{t('pageTitle')}</h1>
-        <p className="mt-2 text-[hsl(var(--muted-foreground))]">{t('pageSubtitle')}</p>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{t('pageTitle')}</h1>
+        <p className="mt-2 text-muted-foreground">{t('pageSubtitle')}</p>
 
-        <div className="mt-10 grid lg:grid-cols-3 gap-8">
+        <div className="mt-10 grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="card">
-              <h2 className="text-xl font-bold mb-6">{t('formTitle')}</h2>
-              <InquiryForm defaultType={defaultType} relatedId={searchParams.id} />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>{t('formTitle')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <InquiryForm defaultType={defaultType} relatedId={searchParams.id} />
+              </CardContent>
+            </Card>
           </div>
 
           <aside>
-            <div className="card">
-              <h2 className="text-xl font-bold mb-4">{t('channelsTitle')}</h2>
-              <ul className="space-y-3 text-sm">
-                <li>
-                  <a href={siteConfig.contact.line} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-brand-emerald hover:underline">
-                    💬 Line
-                  </a>
-                </li>
-                <li>
-                  <a href={siteConfig.contact.facebook} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-brand-emerald">
-                    📘 Facebook
-                  </a>
-                </li>
-                <li>
-                  <a href={siteConfig.contact.telegram} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-brand-emerald">
-                    ✈️ Telegram
-                  </a>
-                </li>
-                <li>
-                  <a href={`mailto:${siteConfig.contact.email}`}
-                    className="flex items-center gap-2 hover:text-brand-emerald">
-                    ✉️ {siteConfig.contact.email}
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>{t('channelsTitle')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3 text-sm">
+                  <ChannelLink href={siteConfig.contact.line} icon={<MessageCircle className="size-4 text-primary" />} label="Line" />
+                  <ChannelLink href={siteConfig.contact.facebook} icon={<FacebookIcon className="size-4 text-primary" />} label="Facebook" />
+                  <ChannelLink href={siteConfig.contact.telegram} icon={<Send className="size-4 text-primary" />} label="Telegram" />
+                  <ChannelLink href={`mailto:${siteConfig.contact.email}`} icon={<Mail className="size-4 text-primary" />} label={siteConfig.contact.email} external={false} />
+                </ul>
+              </CardContent>
+            </Card>
           </aside>
         </div>
       </section>
     </PageShell>
+  );
+}
+
+function ChannelLink({ href, icon, label, external = true }: {
+  href: string; icon: React.ReactNode; label: string; external?: boolean;
+}) {
+  return (
+    <li>
+      <a
+        href={href}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        className="flex items-center gap-2 hover:text-primary transition-colors break-all"
+      >
+        {icon} <span>{label}</span>
+      </a>
+    </li>
   );
 }

@@ -1,17 +1,19 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-
-// บังคับให้ admin section render แบบ dynamic เสมอ (ใช้ cookies/auth)
-export const dynamic = 'force-dynamic';
+import { LayoutDashboard, Bot, GraduationCap, FileText, MessageSquare, Home, TrendingUp } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { LogoutButton } from '@/components/logout-button';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 import { isAdmin } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import type { Locale } from '@/types/database';
 
-// Layout หลังบ้าน — เช็คสิทธิ์ admin (ยกเว้นหน้า login)
+// บังคับ dynamic เพราะใช้ cookies/auth
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({
   children,
   params: { locale },
@@ -22,67 +24,72 @@ export default async function AdminLayout({
   const t = await getTranslations('admin');
   const tNav = await getTranslations('nav');
 
-  // ดึง session — middleware ได้กรอง user ที่ยังไม่ login ออกไปแล้วในเส้นทาง /admin (ยกเว้น /login)
-  // ที่นี่เช็คเพิ่มเฉพาะเรื่อง role admin
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // ถ้ายังไม่ login → ปล่อยให้แสดง (จะเป็นหน้า login ที่ render เนื้อหาเอง)
-  if (!user) {
-    return <>{children}</>;
-  }
+  // ยังไม่ login → ให้ render เนื้อหา (จะเป็นหน้า login)
+  if (!user) return <>{children}</>;
 
-  // login แล้วแต่ไม่ใช่ admin → kick ออกหน้าแรก
+  // login แต่ไม่ใช่ admin → kick กลับ home
   const adminOk = await isAdmin();
-  if (!adminOk) {
-    redirect(`/${locale}`);
-  }
+  if (!adminOk) redirect(`/${locale}`);
 
   const links = [
-    { href: `/${locale}/admin`, label: t('dashboard') },
-    { href: `/${locale}/admin/eas`, label: t('manageEAs') },
-    { href: `/${locale}/admin/courses`, label: t('manageCourses') },
-    { href: `/${locale}/admin/posts`, label: t('managePosts') },
-    { href: `/${locale}/admin/inquiries`, label: t('viewInquiries') },
+    { href: `/${locale}/admin`, label: t('dashboard'), icon: LayoutDashboard },
+    { href: `/${locale}/admin/eas`, label: t('manageEAs'), icon: Bot },
+    { href: `/${locale}/admin/courses`, label: t('manageCourses'), icon: GraduationCap },
+    { href: `/${locale}/admin/posts`, label: t('managePosts'), icon: FileText },
+    { href: `/${locale}/admin/inquiries`, label: t('viewInquiries'), icon: MessageSquare },
   ];
 
   return (
-    <div className="min-h-screen flex">
+    <div className="flex min-h-screen bg-muted/40">
       {/* Sidebar */}
-      <aside className="w-64 bg-brand-navy text-white flex flex-col">
-        <div className="p-6 border-b border-white/10">
-          <Link href={`/${locale}`} className="text-2xl font-bold text-brand-gold">BOTKRIT</Link>
-          <p className="text-xs text-white/60 mt-1">Admin Panel</p>
+      <aside className="hidden w-64 flex-col bg-secondary text-secondary-foreground md:flex">
+        <div className="p-6">
+          <Link href={`/${locale}`} className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-md bg-accent text-accent-foreground">
+              <TrendingUp className="size-5" />
+            </span>
+            <div>
+              <p className="text-lg font-bold text-accent leading-none">BOTKRIT</p>
+              <p className="mt-0.5 text-[10px] uppercase tracking-wider text-secondary-foreground/60">Admin Panel</p>
+            </div>
+          </Link>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
+        <Separator className="bg-white/10" />
+        <nav className="flex-1 space-y-1 p-3">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="block px-3 py-2 rounded-md text-sm hover:bg-white/10 transition-colors"
+              className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-secondary-foreground/80 transition-colors hover:bg-white/10 hover:text-white"
             >
-              {l.label}
+              <l.icon className="size-4" /> {l.label}
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-white/10 space-y-2">
-          <p className="text-xs text-white/60 truncate">{user.email}</p>
+        <div className="space-y-3 p-4">
+          <Separator className="bg-white/10" />
+          <p className="truncate text-xs text-secondary-foreground/60">{user.email}</p>
           <LogoutButton locale={locale} label={t('logout')} />
         </div>
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col">
-        <header className="border-b border-[hsl(var(--border))] bg-[hsl(var(--background))]">
-          <div className="flex h-14 items-center justify-end px-6 gap-3">
-            <Link href={`/${locale}`} className="text-xs text-[hsl(var(--muted-foreground))] hover:text-brand-emerald">
-              ← {tNav('home')}
-            </Link>
+      <div className="flex flex-1 flex-col">
+        <header className="sticky top-0 z-30 border-b bg-background">
+          <div className="flex h-14 items-center justify-end gap-2 px-6">
+            <Button asChild variant="ghost" size="sm">
+              <Link href={`/${locale}`} className="text-xs">
+                <Home className="size-3.5" /> {tNav('home')}
+              </Link>
+            </Button>
             <LanguageSwitcher currentLocale={locale} />
             <ThemeToggle />
           </div>
         </header>
-        <main className="flex-1 p-6 bg-[hsl(var(--muted))]">{children}</main>
+        <main className="flex-1 p-6">{children}</main>
       </div>
     </div>
   );

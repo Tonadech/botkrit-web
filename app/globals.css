@@ -2,56 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ตัวแปรสีสำหรับ light/dark mode */
+/*
+  Theme — รวม shadcn tokens เข้ากับ brand color ของ BOTKRIT
+  ทุกค่าเป็น HSL components (ใช้ใน hsl(var(--x)))
+*/
 @layer base {
   :root {
+    /* base */
     --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
+    --foreground: 215 35% 12%;
+    --muted: 210 20% 96%;
     --muted-foreground: 215 16% 47%;
-    --border: 214 32% 91%;
+    --border: 214 25% 90%;
+    --input: 214 25% 90%;
+    --ring: 152 76% 36%;
+    --radius: 0.75rem;
+
+    /* surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 215 35% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 35% 12%;
+
+    /* brand-aligned semantic tokens */
+    --primary: 152 76% 36%;             /* emerald */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 216 75% 14%;           /* navy */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 64% 52%;               /* gold */
+    --accent-foreground: 215 35% 12%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
   }
 
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --border: 217 33% 20%;
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --background: 215 40% 8%;
+    --foreground: 210 20% 96%;
+    --muted: 215 30% 16%;
+    --muted-foreground: 215 15% 65%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 152 60% 50%;
+
+    --card: 215 38% 11%;
+    --card-foreground: 210 20% 96%;
+    --popover: 215 38% 11%;
+    --popover-foreground: 210 20% 96%;
+
+    --primary: 152 60% 50%;
+    --primary-foreground: 215 40% 8%;
+    --secondary: 216 60% 22%;
+    --secondary-foreground: 210 20% 96%;
+    --accent: 45 70% 58%;
+    --accent-foreground: 215 40% 8%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
   }
 
+  * {
+    border-color: hsl(var(--border));
+  }
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    @apply antialiased;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }
 
-/* utility classes */
 @layer components {
   .container-page {
     @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8;
   }
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-brand-emerald px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-emerald-light transition-colors disabled:opacity-50;
-  }
-  .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-brand-navy/20 bg-white px-5 py-2.5 text-sm font-semibold text-brand-navy hover:bg-brand-navy/5 transition-colors dark:border-white/20 dark:bg-transparent dark:text-white dark:hover:bg-white/5;
-  }
-  .btn-gold {
-    @apply inline-flex items-center justify-center rounded-lg bg-brand-gold px-5 py-2.5 text-sm font-semibold text-brand-navy-dark shadow-sm hover:bg-brand-gold-light transition-colors;
-  }
-  .card {
-    @apply rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-sm;
-  }
-  .input {
-    @apply w-full rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-3 py-2 text-sm focus:border-brand-emerald focus:outline-none focus:ring-2 focus:ring-brand-emerald/20;
-  }
-  .label {
-    @apply block text-sm font-medium text-[hsl(var(--foreground))] mb-1.5;
+  /* gradient ใช้ใน hero section */
+  .bg-hero-gradient {
+    background-image: radial-gradient(ellipse at top, hsl(var(--secondary)) 0%, #051028 80%);
   }
 }

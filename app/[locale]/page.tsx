@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import { Bot, GraduationCap, Lightbulb, ArrowRight, Sparkles } from 'lucide-react';
 import { PageShell } from '@/components/page-shell';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import type { Locale } from '@/types/database';
 
 // หน้าแรก — hero + 3 บริการหลัก + CTA
@@ -9,47 +13,56 @@ export default async function HomePage({ params: { locale } }: { params: { local
 
   return (
     <PageShell locale={locale}>
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-brand-navy via-brand-navy-light to-brand-emerald-dark text-white">
-        <div className="container-page py-24 sm:py-32 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            {t('heroTitle')}
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto">
-            {t('heroSubtitle')}
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4 justify-center">
-            <Link href={`/${locale}/ea`} className="btn-gold">
-              {t('ctaExploreEA')}
-            </Link>
-            <Link href={`/${locale}/courses`} className="btn-secondary !bg-white/10 !text-white !border-white/30 hover:!bg-white/20">
-              {t('ctaExploreCourses')}
-            </Link>
+      {/* Hero section */}
+      <section className="relative overflow-hidden bg-hero-gradient text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,hsl(var(--primary)/0.18),transparent_60%)]" />
+        <div className="container-page relative py-24 sm:py-32">
+          <div className="mx-auto max-w-3xl text-center">
+            <Badge variant="outline" className="border-accent/30 bg-accent/10 text-accent">
+              <Sparkles className="size-3" /> BOTKRIT 2026
+            </Badge>
+            <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              {t('heroTitle')}
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-pretty text-base text-white/75 sm:text-lg">
+              {t('heroSubtitle')}
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                <Link href={`/${locale}/ea`}>{t('ctaExploreEA')} <ArrowRight className="size-4" /></Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="border-white/30 bg-white/5 text-white hover:bg-white/15 hover:text-white">
+                <Link href={`/${locale}/courses`}>{t('ctaExploreCourses')}</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 3 บริการหลัก */}
       <section className="container-page py-20">
-        <h2 className="text-3xl font-bold text-center mb-12">{t('servicesTitle')}</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="text-center">
+          <Badge variant="secondary">Services</Badge>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{t('servicesTitle')}</h2>
+        </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           <ServiceCard
             href={`/${locale}/ea`}
             title={t('service1Title')}
             description={t('service1Desc')}
-            icon="🤖"
+            icon={<Bot className="size-6" />}
           />
           <ServiceCard
             href={`/${locale}/courses`}
             title={t('service2Title')}
             description={t('service2Desc')}
-            icon="🎓"
+            icon={<GraduationCap className="size-6" />}
           />
           <ServiceCard
             href={`/${locale}/botkrit`}
             title={t('service3Title')}
             description={t('service3Desc')}
-            icon="📈"
+            icon={<Lightbulb className="size-6" />}
           />
         </div>
       </section>
@@ -59,19 +72,25 @@ export default async function HomePage({ params: { locale } }: { params: { local
 
 function ServiceCard({
   href, title, description, icon,
-}: {
-  href: string; title: string; description: string; icon: string;
-}) {
+}: { href: string; title: string; description: string; icon: React.ReactNode }) {
   return (
-    <Link
-      href={href}
-      className="card hover:border-brand-emerald hover:shadow-lg transition-all group"
-    >
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold group-hover:text-brand-emerald transition-colors">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm text-[hsl(var(--muted-foreground))]">{description}</p>
+    <Link href={href} className="group">
+      <Card className="h-full transition-all hover:border-primary hover:shadow-lg">
+        <CardHeader>
+          <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            {icon}
+          </div>
+          <CardTitle className="mt-4 group-hover:text-primary transition-colors">
+            {title}
+          </CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <span className="inline-flex items-center gap-1 text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+            <ArrowRight className="size-4" />
+          </span>
+        </CardContent>
+      </Card>
     </Link>
   );
 }

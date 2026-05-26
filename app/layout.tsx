@@ -1,4 +1,4 @@
-// root layout — เป็นเปลือกบางๆ เพราะ layout จริงอยู่ใน app/[locale]/layout.tsx
+// root layout — เป็นเปลือกบางๆ เพราะ html/body จริงอยู่ใน app/[locale]/layout.tsx
 import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

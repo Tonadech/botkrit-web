@@ -1,9 +1,11 @@
 import { getTranslations } from 'next-intl/server';
+import { Mail, Phone, Calendar } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { createClient } from '@/lib/supabase/server';
 import { formatDate } from '@/lib/utils';
 import type { Inquiry, Locale } from '@/types/database';
 
-// ดู inquiries ที่ลูกค้าส่งมา — admin เท่านั้น (RLS guard ใน DB อยู่แล้ว)
 export default async function AdminInquiriesPage({
   params: { locale },
 }: { params: { locale: Locale } }) {
@@ -17,34 +19,40 @@ export default async function AdminInquiriesPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">{t('viewInquiries')}</h1>
+      <h1 className="mb-6 text-2xl font-bold">{t('viewInquiries')}</h1>
 
       <div className="space-y-4">
         {(inquiries as Inquiry[] | null)?.length ? (
           (inquiries as Inquiry[]).map((inq) => (
-            <div key={inq.id} className="card">
-              <div className="flex justify-between items-start gap-4">
-                <div>
-                  <p className="font-semibold">{inq.name}</p>
-                  <div className="text-xs text-[hsl(var(--muted-foreground))] mt-1 space-x-3">
-                    {inq.email && <span>✉️ {inq.email}</span>}
-                    {inq.phone_or_line && <span>📞 {inq.phone_or_line}</span>}
+            <Card key={inq.id}>
+              <CardHeader>
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <CardTitle className="text-base">{inq.name}</CardTitle>
+                    <CardDescription className="mt-1 flex flex-wrap gap-3 text-xs">
+                      {inq.email && (
+                        <span className="inline-flex items-center gap-1"><Mail className="size-3" /> {inq.email}</span>
+                      )}
+                      {inq.phone_or_line && (
+                        <span className="inline-flex items-center gap-1"><Phone className="size-3" /> {inq.phone_or_line}</span>
+                      )}
+                    </CardDescription>
+                  </div>
+                  <div className="text-right">
+                    <Badge variant="secondary" className="uppercase">{inq.type}</Badge>
+                    <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
+                      <Calendar className="size-3" /> {formatDate(inq.created_at, locale)}
+                    </p>
                   </div>
                 </div>
-                <div className="text-right shrink-0">
-                  <span className="inline-block text-xs px-2 py-1 rounded bg-brand-emerald/10 text-brand-emerald font-semibold uppercase">
-                    {inq.type}
-                  </span>
-                  <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">
-                    {formatDate(inq.created_at, locale)}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-3 text-sm whitespace-pre-wrap">{inq.message}</p>
-            </div>
+              </CardHeader>
+              <CardContent>
+                <p className="whitespace-pre-wrap text-sm">{inq.message}</p>
+              </CardContent>
+            </Card>
           ))
         ) : (
-          <p className="text-[hsl(var(--muted-foreground))]">—</p>
+          <p className="text-muted-foreground">—</p>
         )}
       </div>
     </div>

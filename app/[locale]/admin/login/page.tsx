@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { TrendingUp } from 'lucide-react';
 import { LoginForm } from './login-form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/server';
 import { isAdmin } from '@/lib/auth';
 import type { Locale } from '@/types/database';
 
-// หน้า /admin/login — public access
-// ถ้าล็อกอินอยู่แล้วและเป็น admin → redirect ไป dashboard
 export default async function LoginPage({
   params: { locale },
 }: { params: { locale: Locale } }) {
@@ -21,14 +21,19 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-brand-navy p-4">
-      <div className="w-full max-w-md bg-white dark:bg-brand-navy-light rounded-2xl shadow-2xl p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-brand-navy dark:text-brand-gold">{t('loginTitle')}</h1>
-          <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">{t('loginSubtitle')}</p>
-        </div>
-        <LoginForm locale={locale} />
-      </div>
+    <div className="flex min-h-screen items-center justify-center bg-hero-gradient p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-2 flex size-12 items-center justify-center rounded-md bg-gradient-to-br from-primary to-secondary text-white">
+            <TrendingUp className="size-6" />
+          </div>
+          <CardTitle>{t('loginTitle')}</CardTitle>
+          <CardDescription>{t('loginSubtitle')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <LoginForm locale={locale} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

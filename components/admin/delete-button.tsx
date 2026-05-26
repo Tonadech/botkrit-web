@@ -2,11 +2,12 @@
 
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { Locale } from '@/types/database';
 
 type DeleteAction = (id: string, locale: string) => Promise<void>;
 
-// ปุ่มลบ — รับ server action เป็น prop ทำให้ใช้กับหลายตารางได้
 export function DeleteButton({
   id, locale, action, label, confirmLabel,
 }: {
@@ -20,8 +21,11 @@ export function DeleteButton({
   const router = useRouter();
 
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="sm"
       disabled={pending}
+      className="text-destructive hover:bg-destructive/10 hover:text-destructive"
       onClick={() => {
         if (!confirm(confirmLabel)) return;
         startTransition(async () => {
@@ -29,9 +33,8 @@ export function DeleteButton({
           router.refresh();
         });
       }}
-      className="text-red-600 hover:underline disabled:opacity-50"
     >
-      {label}
-    </button>
+      <Trash2 className="size-3.5" /> {label}
+    </Button>
   );
 }
