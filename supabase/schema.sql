@@ -63,6 +63,7 @@ create table if not exists public.eas (
   price numeric(12,2) default 0,                 -- ราคา (บาท)
   image_url text,
   backtest_result text,                          -- สรุปผล backtest (markdown ได้)
+  category text check (category in ('scalping', 'trend', 'grid', 'portfolio')),  -- กลยุทธ์
   risk_level text check (risk_level in ('low', 'medium', 'high')),  -- ระดับความเสี่ยง
   monthly_return numeric(6,2),                   -- % ผลตอบแทน 30 วัน เช่น 12.40
   max_drawdown numeric(6,2),                     -- % drawdown สูงสุด เช่น 4.20

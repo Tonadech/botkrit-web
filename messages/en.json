@@ -53,6 +53,13 @@
       "low": "Low Risk",
       "medium": "Medium Risk",
       "high": "High Risk"
+    },
+    "allCategories": "All",
+    "cat": {
+      "scalping": "Scalping",
+      "trend": "Trend",
+      "grid": "Grid",
+      "portfolio": "Portfolio"
     }
   },
   "courses": {
@@ -162,6 +169,13 @@
       "low": "Low",
       "medium": "Medium",
       "high": "High"
+    },
+    "category": "Strategy (category)",
+    "cat": {
+      "scalping": "Scalping",
+      "trend": "Trend",
+      "grid": "Grid",
+      "portfolio": "Portfolio"
     }
   }
 }

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { TrendingUp, AlertTriangle, MessageCircle, Send, Mail } from 'lucide-react';
+import { AlertTriangle, MessageCircle, Send, Mail } from 'lucide-react';
+import { BotkritLogo } from '@/components/botkrit-logo';
 import { FacebookIcon } from '@/components/brand-icons';
 import { siteConfig } from '@/lib/config';
 import type { Locale } from '@/types/database';
@@ -14,9 +15,7 @@ export async function Footer({ locale }: { locale: Locale }) {
       <div className="container-page py-12 grid gap-8 md:grid-cols-3">
         <div>
           <Link href={`/${locale}`} className="flex items-center gap-2">
-            <span className="flex size-8 items-center justify-center rounded-md bg-accent text-accent-foreground">
-              <TrendingUp className="size-4" />
-            </span>
+            <BotkritLogo className="size-8 rounded-md" />
             <span className="text-xl font-bold text-accent">BOTKRIT</span>
           </Link>
           <p className="mt-3 text-sm text-secondary-foreground/70 max-w-sm">{t('tagline')}</p>

@@ -7,6 +7,10 @@ export type Locale = 'th' | 'en';
 
 export type RiskLevel = 'low' | 'medium' | 'high';
 
+// กลยุทธ์ของ EA — ใช้กรองในหน้า catalog
+export type EaCategory = 'scalping' | 'trend' | 'grid' | 'portfolio';
+export const EA_CATEGORIES: EaCategory[] = ['scalping', 'trend', 'grid', 'portfolio'];
+
 export type EA = {
   id: string;
   slug: string;
@@ -19,6 +23,7 @@ export type EA = {
   price: number;
   image_url: string | null;
   backtest_result: string | null;
+  category: EaCategory | null; // กลยุทธ์ (scalping/trend/grid/portfolio)
   // ตัวเลขผลงาน (optional — โชว์เป็นการ์ด dashboard เมื่อมีข้อมูล)
   risk_level: RiskLevel | null;
   monthly_return: number | null; // % ผลตอบแทน 30 วัน เช่น 12.4

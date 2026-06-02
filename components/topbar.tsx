@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { TrendingUp } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import { BotkritLogo } from './botkrit-logo';
 import { LanguageSwitcher } from './language-switcher';
 import { ThemeToggle } from './theme-toggle';
 import { MobileNavTrigger } from './mobile-nav-trigger';
@@ -20,9 +20,7 @@ export async function Topbar({ locale }: { locale: Locale }) {
           sidebar={<PublicSidebar locale={locale} />}
         />
         <Link href={`/${locale}`} className="flex items-center gap-2">
-          <span className="flex size-8 items-center justify-center rounded-md bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-            <TrendingUp className="size-4" />
-          </span>
+          <BotkritLogo className="size-8 rounded-md" />
           <span className="text-lg font-bold tracking-tight">BOTKRIT</span>
         </Link>
 

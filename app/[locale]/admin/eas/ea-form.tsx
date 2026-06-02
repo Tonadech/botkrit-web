@@ -88,6 +88,22 @@ export async function EAForm({ ea, locale }: { ea?: EA; locale: Locale }) {
               <Textarea id="backtest_result" name="backtest_result" rows={4} defaultValue={ea?.backtest_result ?? ''} />
             </div>
 
+            <div className="space-y-1.5">
+              <Label htmlFor="category">{t('category')}</Label>
+              <select
+                id="category"
+                name="category"
+                defaultValue={ea?.category ?? ''}
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <option value="">—</option>
+                <option value="scalping">{t('cat.scalping')}</option>
+                <option value="trend">{t('cat.trend')}</option>
+                <option value="grid">{t('cat.grid')}</option>
+                <option value="portfolio">{t('cat.portfolio')}</option>
+              </select>
+            </div>
+
             {/* ตัวเลขผลงาน — โชว์บนการ์ด EA (เว้นว่างได้ถ้ายังไม่มีข้อมูล) */}
             <div className="space-y-4 rounded-lg border border-dashed p-4">
               <p className="text-sm font-medium text-muted-foreground">{t('performance')}</p>

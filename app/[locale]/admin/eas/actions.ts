@@ -42,6 +42,12 @@ export async function saveEA(formData: FormData) {
     price: Number(formData.get('price') || 0),
     image_url: (formData.get('image_url') as string) || null,
     backtest_result: (formData.get('backtest_result') as string) || null,
+    category: (String(formData.get('category') ?? '').trim() || null) as
+      | 'scalping'
+      | 'trend'
+      | 'grid'
+      | 'portfolio'
+      | null,
     risk_level: (String(formData.get('risk_level') ?? '').trim() || null) as
       | 'low'
       | 'medium'
