@@ -1,13 +1,10 @@
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Info, ArrowRight } from 'lucide-react';
+import { Info } from 'lucide-react';
 import { PageShell } from '@/components/page-shell';
-import { PurchaseModal } from '@/components/purchase-modal';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { EACard } from '@/components/ea-card';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/server';
-import { pick, type Locale, type EA } from '@/types/database';
-import { formatPrice } from '@/lib/utils';
+import { type Locale, type EA } from '@/types/database';
 
 export default async function EAListPage({ params: { locale } }: { params: { locale: Locale } }) {
   const t = await getTranslations('ea');
@@ -48,47 +45,5 @@ export default async function EAListPage({ params: { locale } }: { params: { loc
         </div>
       </section>
     </PageShell>
-  );
-}
-
-function EACard({
-  ea, locale, t,
-}: { ea: EA; locale: Locale; t: (key: string) => string }) {
-  const name = pick(ea, 'name', locale);
-  const description = pick(ea, 'description', locale);
-
-  return (
-    <Card className="flex flex-col overflow-hidden">
-      {ea.image_url ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={ea.image_url} alt={name} className="h-40 w-full object-cover" />
-      ) : (
-        <div className="flex h-40 w-full items-center justify-center bg-gradient-to-br from-secondary via-secondary/85 to-primary text-3xl font-bold text-white">
-          {name.charAt(0)}
-        </div>
-      )}
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription className="line-clamp-3">{description}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-1">
-        <p className="text-2xl font-bold text-primary">{formatPrice(ea.price, locale)}</p>
-      </CardContent>
-      <CardFooter className="gap-2">
-        <Button asChild variant="outline" className="flex-1">
-          <Link href={`/${locale}/ea/${ea.slug}`}>
-            {t('features')} <ArrowRight className="size-4" />
-          </Link>
-        </Button>
-        <PurchaseModal
-          triggerLabel={t('buyOrInquire')}
-          itemName={name}
-          itemType="ea"
-          itemId={ea.id}
-          price={ea.price}
-          locale={locale}
-        />
-      </CardFooter>
-    </Card>
   );
 }

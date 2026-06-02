@@ -5,7 +5,8 @@
 
 -- ---------- EAs (2 ตัวอย่าง) ----------
 insert into public.eas (slug, name_th, name_en, description_th, description_en,
-  features_th, features_en, price, image_url, backtest_result, is_published)
+  features_th, features_en, price, image_url, backtest_result,
+  risk_level, monthly_return, max_drawdown, win_rate, is_published)
 values
 (
   'botkrit-trend-master',
@@ -18,7 +19,7 @@ values
   4990.00,
   null,
   'Backtest 2019–2024 บนคู่ XAUUSD H1: Net Profit +312%, Max DD 18.2%, Profit Factor 1.74',
-  true
+  'medium', 8.4, 18.2, 68, true
 ),
 (
   'botkrit-scalper-pro',
@@ -31,7 +32,7 @@ values
   3990.00,
   null,
   'Backtest 2021–2024 บน EURUSD M5: Win rate 71%, Profit Factor 1.52, Max DD 9.8%',
-  true
+  'high', 12.4, 9.8, 71, true
 );
 
 -- ---------- Courses (2 คอร์ส) ----------

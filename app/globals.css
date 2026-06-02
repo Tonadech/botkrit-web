@@ -76,4 +76,11 @@
   .bg-hero-gradient {
     background-image: radial-gradient(ellipse at top, hsl(var(--secondary)) 0%, #051028 80%);
   }
+  /* ตารางเส้นบางๆ สไตล์ trading terminal — วางทับ hero */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--primary) / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--primary) / 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
 }

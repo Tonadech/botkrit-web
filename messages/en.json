@@ -22,7 +22,19 @@
     "service2Title": "EA-Building Courses",
     "service2Desc": "Learn to write EAs from scratch to advanced",
     "service3Title": "BOTKRIT Insights",
-    "service3Desc": "Articles, knowledge, and the story behind the project"
+    "service3Desc": "Articles, knowledge, and the story behind the project",
+    "heroEyebrow": "LIVE TRADING TERMINAL",
+    "howTitle": "How It Works",
+    "howSubtitle": "Get your EA running in three simple steps — a smooth flow from selection to monitoring.",
+    "step1Title": "Select Your EA",
+    "step1Desc": "Choose the algorithmic model that fits your risk profile and trading style.",
+    "step2Title": "Instant Installation",
+    "step2Desc": "Download the files and apply them to MetaTrader 4/5 instantly, with a step-by-step guide.",
+    "step3Title": "Monitor & Scale",
+    "step3Desc": "Track live performance and adjust lot sizes and settings through an intuitive interface.",
+    "ctaBannerTitle": "Ready to Automate?",
+    "ctaBannerSubtitle": "Let the algorithm execute your edge. Stop staring at charts and let the system work.",
+    "ctaBannerButton": "Get Started Today"
   },
   "ea": {
     "pageTitle": "Our EAs",
@@ -33,7 +45,15 @@
     "buyOrInquire": "Buy / Inquire",
     "noItems": "No EAs available yet",
     "knowledgeTitle": "What is an EA?",
-    "knowledgeDesc": "An Expert Advisor is an automated trading program on MetaTrader — it runs 24/7, removes emotion, and is backtestable. But every EA carries risk and is not a money printer."
+    "knowledgeDesc": "An Expert Advisor is an automated trading program on MetaTrader — it runs 24/7, removes emotion, and is backtestable. But every EA carries risk and is not a money printer.",
+    "monthlyReturn": "30D Return",
+    "maxDrawdown": "Max Drawdown",
+    "winRate": "Win Rate",
+    "risk": {
+      "low": "Low Risk",
+      "medium": "Medium Risk",
+      "high": "High Risk"
+    }
   },
   "courses": {
     "pageTitle": "EA-Building Courses",
@@ -132,6 +152,16 @@
     "publish": "Publish immediately",
     "saved": "Saved successfully",
     "deleted": "Deleted",
-    "confirmDelete": "Confirm delete?"
+    "confirmDelete": "Confirm delete?",
+    "performance": "Performance metrics (shown on EA card)",
+    "riskLevel": "Risk Level",
+    "monthlyReturn": "30D Return",
+    "maxDrawdown": "Max Drawdown",
+    "winRate": "Win Rate",
+    "risk": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    }
   }
 }

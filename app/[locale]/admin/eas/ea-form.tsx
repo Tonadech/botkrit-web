@@ -88,6 +88,39 @@ export async function EAForm({ ea, locale }: { ea?: EA; locale: Locale }) {
               <Textarea id="backtest_result" name="backtest_result" rows={4} defaultValue={ea?.backtest_result ?? ''} />
             </div>
 
+            {/* ตัวเลขผลงาน — โชว์บนการ์ด EA (เว้นว่างได้ถ้ายังไม่มีข้อมูล) */}
+            <div className="space-y-4 rounded-lg border border-dashed p-4">
+              <p className="text-sm font-medium text-muted-foreground">{t('performance')}</p>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Label htmlFor="risk_level">{t('riskLevel')}</Label>
+                  <select
+                    id="risk_level"
+                    name="risk_level"
+                    defaultValue={ea?.risk_level ?? ''}
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  >
+                    <option value="">—</option>
+                    <option value="low">{t('risk.low')}</option>
+                    <option value="medium">{t('risk.medium')}</option>
+                    <option value="high">{t('risk.high')}</option>
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="monthly_return">{t('monthlyReturn')} (%)</Label>
+                  <Input id="monthly_return" name="monthly_return" type="number" step="0.01" defaultValue={ea?.monthly_return ?? ''} placeholder="12.4" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="max_drawdown">{t('maxDrawdown')} (%)</Label>
+                  <Input id="max_drawdown" name="max_drawdown" type="number" step="0.01" min="0" defaultValue={ea?.max_drawdown ?? ''} placeholder="4.2" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="win_rate">{t('winRate')} (%)</Label>
+                  <Input id="win_rate" name="win_rate" type="number" step="0.01" min="0" max="100" defaultValue={ea?.win_rate ?? ''} placeholder="78" />
+                </div>
+              </div>
+            </div>
+
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" name="is_published" defaultChecked={ea?.is_published ?? false} className="size-4 rounded border-input" />
               <span>{t('publish')}</span>

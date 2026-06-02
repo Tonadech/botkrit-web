@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { siteConfig } from '@/lib/config';
-import { formatPrice } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import type { Locale } from '@/types/database';
 
 type Props = {
@@ -19,11 +19,13 @@ type Props = {
   itemId?: string;
   price?: number;
   locale: Locale;
+  // ปรับ style ปุ่ม trigger ได้ (เช่น ใช้สีทอง/เต็มความกว้างในการ์ด EA)
+  triggerClassName?: string;
 };
 
 // Dialog ของ shadcn — popup ช่องทางชำระเงิน + ปุ่มทักแชท/ส่งฟอร์ม
 // ออกแบบให้รับ prop เพิ่มในอนาคต (เช่น paymentMode="stripe") ได้
-export function PurchaseModal({ triggerLabel, itemName, itemType, itemId, price, locale }: Props) {
+export function PurchaseModal({ triggerLabel, itemName, itemType, itemId, price, locale, triggerClassName }: Props) {
   const t = useTranslations('purchase');
   const [copied, setCopied] = useState(false);
 
@@ -36,7 +38,7 @@ export function PurchaseModal({ triggerLabel, itemName, itemType, itemId, price,
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-primary hover:bg-primary/90">
+        <Button className={cn('bg-primary hover:bg-primary/90', triggerClassName)}>
           {triggerLabel}
         </Button>
       </DialogTrigger>

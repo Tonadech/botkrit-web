@@ -11,6 +11,14 @@ function linesToArray(text: string | undefined | null): string[] {
   return text.split('\n').map((s) => s.trim()).filter(Boolean);
 }
 
+// แปลงค่า input ตัวเลขเป็น number หรือ null (เว้นว่าง = null)
+function numberOrNull(value: FormDataEntryValue | null): number | null {
+  const s = String(value ?? '').trim();
+  if (s === '') return null;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : null;
+}
+
 // ทุก action เช็คสิทธิ์ admin ก่อนเสมอ
 async function assertAdmin() {
   const ok = await isAdmin();
@@ -34,6 +42,14 @@ export async function saveEA(formData: FormData) {
     price: Number(formData.get('price') || 0),
     image_url: (formData.get('image_url') as string) || null,
     backtest_result: (formData.get('backtest_result') as string) || null,
+    risk_level: (String(formData.get('risk_level') ?? '').trim() || null) as
+      | 'low'
+      | 'medium'
+      | 'high'
+      | null,
+    monthly_return: numberOrNull(formData.get('monthly_return')),
+    max_drawdown: numberOrNull(formData.get('max_drawdown')),
+    win_rate: numberOrNull(formData.get('win_rate')),
     is_published: formData.get('is_published') === 'on',
   };
 

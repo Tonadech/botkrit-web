@@ -5,6 +5,8 @@
 
 export type Locale = 'th' | 'en';
 
+export type RiskLevel = 'low' | 'medium' | 'high';
+
 export type EA = {
   id: string;
   slug: string;
@@ -17,6 +19,11 @@ export type EA = {
   price: number;
   image_url: string | null;
   backtest_result: string | null;
+  // ตัวเลขผลงาน (optional — โชว์เป็นการ์ด dashboard เมื่อมีข้อมูล)
+  risk_level: RiskLevel | null;
+  monthly_return: number | null; // % ผลตอบแทน 30 วัน เช่น 12.4
+  max_drawdown: number | null; // % ขาดทุนสูงสุด เช่น 4.2
+  win_rate: number | null; // % อัตราชนะ เช่น 78
   is_published: boolean;
   created_at: string;
 };
