@@ -1,24 +1,20 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import {
-  Home, Bot, GraduationCap, Lightbulb, FileText, Mail, ShieldCheck,
+  Home, Bot, GraduationCap, Lightbulb, FileText, Mail,
   MessageCircle, Send,
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { FacebookIcon } from '@/components/brand-icons';
-import { createClient } from '@/lib/supabase/server';
 import { siteConfig } from '@/lib/config';
 import type { Locale } from '@/types/database';
 
 // Sidebar เมนูซ้ายสำหรับหน้า public — ใช้ใน PageShell
 // แสดงเสมอ บน desktop (md+), บน mobile ซ่อนแล้วเปิดผ่าน Sheet drawer ใน topbar
+// หมายเหตุ: ไม่โชว์ลิงก์ admin บน UI ลูกค้า — เข้าหลังบ้านได้ผ่าน /admin โดยตรงเท่านั้น
 export async function PublicSidebar({ locale }: { locale: Locale }) {
   const t = await getTranslations('nav');
   const tFooter = await getTranslations('footer');
-
-  // เช็ค user เพื่อโชว์ admin shortcut
-  const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
 
   const links = [
     { href: `/${locale}`, label: t('home'), icon: Home },
@@ -43,19 +39,6 @@ export async function PublicSidebar({ locale }: { locale: Locale }) {
           </Link>
         ))}
       </div>
-
-      {user && (
-        <>
-          <Separator className="my-3" />
-          <Link
-            href={`/${locale}/admin`}
-            className="flex items-center gap-3 rounded-md bg-accent/10 px-3 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent/20"
-          >
-            <ShieldCheck className="size-4" />
-            {t('admin')}
-          </Link>
-        </>
-      )}
 
       <div className="mt-auto pt-4">
         <Separator className="mb-3" />
